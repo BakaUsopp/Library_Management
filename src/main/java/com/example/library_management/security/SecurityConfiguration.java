@@ -24,15 +24,10 @@ public class SecurityConfiguration {
                         .requestMatchers("/students","/publishers").hasRole("ADMIN")
                         .requestMatchers("/authors","/books","/loans").hasRole("USER")
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
-        /*login
-        http.formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/students", true)
-                .failureUrl("/login-error")
-                .permitAll()
-        );
-*/
+                .formLogin(s ->s.loginProcessingUrl("/login").successForwardUrl("/api/**")
+//                        defaultSuccessUrl("/students", true)
+                        .failureUrl("/login-error").permitAll());
+
 
         return http.build();
     }
